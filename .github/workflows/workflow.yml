@@ -21,7 +21,8 @@ jobs:
           pip install -r requirements.txt
       - name: Run application smoke test
         run: |
-          timeout 5 python src/main.py << EOF || [ $? -eq 124 ]
+          # Run the app as a package module so imports like `from src.auth` resolve reliably
+          timeout 5 python -m src.main << EOF || [ $? -eq 124 ]
           3
           EOF
   test:
